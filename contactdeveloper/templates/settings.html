@@ -1,0 +1,34 @@
+{% import "_includes/forms" as forms %}
+
+<form method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+	{% set fromEmail = getHelp is defined ? getHelp.fromEmail : currentUser.email %}
+	{% set outgoingEmail = 'paul@mrpaulphan.com' %}
+
+	{% if fromEmail == "support@pixelandtonic.com" or fromEmail == "support@craftcms.com" %}
+		{% set fromEmail = "" %}
+	{% endif %}
+
+	{{ forms.textField({
+		label: "Your Email"|t,
+		class: 'fromEmail',
+		name: 'fromEmail',
+		value: fromEmail,
+		errors: getHelp is defined ? getHelp.getErrors('fromEmail') : ''
+	}) }}
+
+	{{ forms.textareaField({
+		label: "Message"|t,
+		class: 'message',
+		name: 'message',
+		placeholder: "Tell Paul about your problems. Inlcude links to screenshots."|t,
+		rows: 4
+	}) }}
+
+	<div class="buttons last">
+		<input type="submit" class="btn submit" value="{{ 'Send'|t }}">
+		<div class="spinner hidden"></div>
+	</div>
+
+	{% set email %}<a href="mailto:{{outgoingEmail}}">{{outgoingEmail}}</a>{% endset %}
+	<p class="error hidden">{{ "Couldn’t send your message. Please email it to {email} instead."|t({ email: email })|raw }}</p>
+</form>
