@@ -1,8 +1,7 @@
 {% import "_includes/forms" as forms %}
 
-<form method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+<form action="/process_form.php" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
 	{% set fromEmail = getHelp is defined ? getHelp.fromEmail : currentUser.email %}
-	{% set outgoingEmail = 'paul@mrpaulphan.com' %}
 
 	{% if fromEmail == "support@pixelandtonic.com" or fromEmail == "support@craftcms.com" %}
 		{% set fromEmail = "" %}
@@ -20,15 +19,21 @@
 		label: "Message"|t,
 		class: 'message',
 		name: 'message',
-		placeholder: "Tell Paul about your problems. Inlcude links to screenshots."|t,
+		placeholder: "Tell Paul about your problems."|t,
 		rows: 4
 	}) }}
 
+	{{ forms.fileField({
+		label: "Attach a screenshot of your issue?"|t,
+		class: 'attachAdditionalFile',
+		name: 'attachAdditionalFile',
+	}) }}
+
 	<div class="buttons last">
-		<input type="submit" class="btn submit" value="{{ 'Send'|t }}">
+		<input type="submit" class="btn submit" value="{{ 'Send'|t }}" name="contactDeveloperWidgetForm">
 		<div class="spinner hidden"></div>
 	</div>
 
-	{% set email %}<a href="mailto:{{outgoingEmail}}">{{outgoingEmail}}</a>{% endset %}
+	{% set email %}<a href="mailto:paul@mrpaulphan.com">paul@mrpaulphan.com</a>{% endset %}
 	<p class="error hidden">{{ "Couldn’t send your message. Please email it to {email} instead."|t({ email: email })|raw }}</p>
 </form>
