@@ -22,7 +22,7 @@ class ContactDeveloperPlugin extends BasePlugin
 	    }
 	    public function getDocumentationUrl()
 	    {
-	      return 'https://github.com/mrpaulphan';
+	      return 'https://github.com/mrpaulphan/craftcms-contactdeveloper';
 	    }
 	    public function getDeveloperUrl()
 	    {
